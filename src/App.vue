@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import NavBar from '@/components/NavBar.vue'
+import FooterBar from '@/components/FooterBar.vue'
 
 onMounted(() => {
   // Check for saved theme
@@ -14,31 +15,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col font-sans">
     <NavBar />
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main class="flex-grow">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>
     </main>
-    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto py-6">
-      <div class="container mx-auto px-4 text-center text-gray-500 dark:text-gray-400 text-sm">
-        &copy; {{ new Date().getFullYear() }} Modern E-Commerce SPA. All rights reserved.
-      </div>
-    </footer>
+    <FooterBar />
   </div>
 </template>
 
 <style>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  transform: translateY(10px);
 }
 </style>

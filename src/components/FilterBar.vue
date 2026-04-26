@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { getCategories } from '@/services/api'
 
-const props = defineProps<{
+defineProps<{
   modelValue: string
 }>()
 

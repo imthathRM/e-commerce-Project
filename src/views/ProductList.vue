@@ -48,15 +48,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <!-- Hero Section -->
-    <div class="mb-12 rounded-3xl overflow-hidden relative bg-gradient-to-r from-primary-600 to-primary-800 text-white p-8 sm:p-12 shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+    <!-- Header Section -->
+    <div class="mb-12 rounded-3xl overflow-hidden relative bg-gradient-to-r from-primary-600 to-blue-600 text-white p-8 sm:p-12 shadow-lg">
       <div class="relative z-10 max-w-2xl">
         <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-          Discover Our Latest Collection
+          All Products
         </h1>
-        <p class="text-lg text-primary-100 mb-8 max-w-xl">
-          Experience premium quality and modern design. Shop our curated selection of top-rated products.
+        <p class="text-lg text-primary-100 max-w-xl">
+          Browse our entire collection and find exactly what you're looking for.
         </p>
       </div>
       <div class="absolute right-0 top-0 bottom-0 w-1/2 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>

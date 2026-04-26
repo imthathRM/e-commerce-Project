@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getProductById } from '@/services/api'
 import { useCartStore } from '@/stores/cart'
 import type { Product } from '@/types'
-import { StarIcon, ArrowLeftIcon, ShoppingCartIcon, CheckIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ShoppingCartIcon, CheckIcon } from '@heroicons/vue/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/vue/20/solid'
 
 const route = useRoute()
@@ -56,7 +56,7 @@ const handleAddToCart = () => {
 </script>
 
 <template>
-  <div class="max-w-6xl mx-auto py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
     <button 
       @click="router.back()" 
       class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors mb-8 group"

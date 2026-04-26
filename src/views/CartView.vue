@@ -20,7 +20,7 @@ const formattedTotal = computed(() => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Shopping Cart</h1>
 
     <div v-if="cartStore.items.length === 0" class="bg-white dark:bg-gray-800 rounded-3xl p-12 text-center shadow-sm border border-gray-100 dark:border-gray-700">
