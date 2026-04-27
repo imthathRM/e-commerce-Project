@@ -24,7 +24,7 @@ const features = [
 
 const testimonials = [
   {
-    content: "ShopVue has transformed the way I buy electronics. The interface is intuitive, and the shipping is incredibly fast. Highly recommended!",
+    content: "IZ Nexus has transformed the way I buy electronics. The interface is intuitive, and the shipping is incredibly fast. Highly recommended!",
     author: "Sarah Johnson",
     role: "Tech Enthusiast",
     rating: 5
@@ -55,13 +55,13 @@ const testimonials = [
       <div class="relative max-w-4xl mx-auto text-center">
         <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6 leading-tight animate-slide-up" style="animation-delay: 0.1s;">
           Discover the Future of <br/>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-blue-500">Online Shopping</span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-400">Online Shopping</span>
         </h1>
         <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto animate-slide-up" style="animation-delay: 0.2s;">
           Experience seamless navigation, secure transactions, and lightning-fast delivery. Upgrade your shopping experience today with our premium platform.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up" style="animation-delay: 0.3s;">
-          <button @click="router.push('/products')" class="px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-full font-semibold text-lg transition-all transform hover:-translate-y-1 hover:shadow-lg flex items-center gap-2 w-full sm:w-auto justify-center">
+          <button @click="router.push('/products')" class="px-8 py-4 bg-secondary-400 hover:bg-secondary-500 text-primary-900 rounded-full font-semibold text-lg transition-all transform hover:-translate-y-1 hover:shadow-lg flex items-center gap-2 w-full sm:w-auto justify-center">
             Shop Now <ArrowRightIcon class="w-5 h-5" />
           </button>
           <button @click="router.push('/about')" class="px-8 py-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 rounded-full font-semibold text-lg transition-all w-full sm:w-auto justify-center shadow-sm">
@@ -74,7 +74,7 @@ const testimonials = [
     <!-- Features Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Why Choose ShopVue?</h2>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Why Choose IZ Nexus?</h2>
         <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Everything you need for a perfect shopping experience.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
@@ -101,7 +101,7 @@ const testimonials = [
           </div>
           <p class="text-gray-600 dark:text-gray-300 italic mb-6">"{{ testimonial.content }}"</p>
           <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-inner">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-400 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-inner">
               {{ testimonial.author.charAt(0) }}
             </div>
             <div>
@@ -116,7 +116,7 @@ const testimonials = [
     <!-- Call to Action -->
     <section class="max-w-4xl mx-auto text-center px-4">
       <div class="bg-primary-600 text-white rounded-3xl p-10 md:p-16 shadow-xl relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-blue-600 opacity-90"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-600 to-secondary-900 opacity-90"></div>
         <!-- Decorative blob -->
         <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2"></div>
         <div class="relative z-10">

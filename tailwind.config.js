@@ -9,13 +9,25 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          900: '#1e3a8a',
+          50: '#e6f0fd',
+          100: '#cce1fb',
+          400: '#66a3f4',
+          500: '#0A192F', // Navy Blue
+          600: '#081426',
+          700: '#060f1c',
+          900: '#020509',
+        },
+        secondary: {
+          50: '#effefb',
+          100: '#cdfff3',
+          400: '#64FFDA', // Light Green / Teal
+          500: '#20eebc',
+          600: '#15cd9f',
+          900: '#064232',
+        },
+        surface: {
+          light: '#ffffff',
+          dark: '#112240',
         }
       },
       fontFamily: {

@@ -86,7 +86,7 @@ const handleSubmit = async () => {
               </div>
               <div>
                 <p class="font-medium text-gray-900 dark:text-white">Email</p>
-                <a href="mailto:support@shopvue.com" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">support@shopvue.com</a>
+                <a href="mailto:support@iznexus.com" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">support@iznexus.com</a>
               </div>
             </div>
 

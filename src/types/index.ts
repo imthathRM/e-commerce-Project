@@ -22,3 +22,18 @@ export interface ProductsResponse {
 export interface CartItem extends Product {
   quantity: number;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  image: string;
+}
+
+export interface AuthResponse extends User {
+  token: string;
+  refreshToken: string;
+}

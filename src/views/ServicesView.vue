@@ -41,7 +41,7 @@ const services = [
     <div class="text-center max-w-3xl mx-auto mb-16">
       <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-6">Our Services & Features</h1>
       <p class="text-lg text-gray-600 dark:text-gray-300">
-        Discover the powerful features and professional services that make ShopVue the premier choice for modern e-commerce.
+        Discover the powerful features and professional services that make IZ Nexus the premier choice for modern e-commerce.
       </p>
     </div>
 

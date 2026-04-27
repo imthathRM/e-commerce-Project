@@ -61,7 +61,7 @@ const handleAddToCart = (e: Event) => {
         </div>
         <button 
           @click="handleAddToCart"
-          class="bg-gray-100 hover:bg-primary-500 text-gray-900 hover:text-white dark:bg-gray-700 dark:text-white dark:hover:bg-primary-500 p-2.5 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          class="bg-gray-100 hover:bg-secondary-400 text-gray-900 hover:text-primary-900 dark:bg-gray-700 dark:text-white dark:hover:bg-secondary-400 dark:hover:text-primary-900 p-2.5 rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           aria-label="Add to cart"
         >
           <ShoppingCartIcon class="w-5 h-5" />

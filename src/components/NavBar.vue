@@ -1,14 +1,26 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ShoppingCartIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { useCartStore } from '@/stores/cart'
+import { useAuthStore } from '@/stores/auth'
+import { UserIcon, ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+
+const isLoggedIn = computed(() => authStore.isAuthenticated)
 
 const isDark = ref(false)
 const searchQuery = ref('')
+const isProfileDropdownOpen = ref(false)
+
+const handleLogout = () => {
+  authStore.logout()
+  isProfileDropdownOpen.value = false
+  router.push('/login')
+}
 
 onMounted(() => {
   isDark.value = document.documentElement.classList.contains('dark')
@@ -47,20 +59,20 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
     <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <!-- Logo -->
       <router-link to="/" class="flex items-center gap-2 group flex-shrink-0">
-        <div class="bg-primary-600 text-white p-2 rounded-xl group-hover:bg-primary-500 transition-colors shadow-md">
+        <div class="bg-primary-500 text-white p-2 rounded-xl group-hover:bg-secondary-400 group-hover:text-primary-900 transition-all duration-300 shadow-md group-hover:shadow-lg">
           <ShoppingCartIcon class="w-6 h-6" />
         </div>
-        <span class="font-extrabold text-2xl hidden md:block bg-gradient-to-r from-primary-600 to-blue-500 bg-clip-text text-transparent">
-          ShopVue
+        <span class="font-extrabold text-2xl hidden md:block bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent transition-all duration-300">
+          IZ Nexus
         </span>
       </router-link>
 
       <!-- Navigation Links -->
       <div class="hidden lg:flex items-center gap-8 mx-4">
-        <router-link to="/products" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" active-class="text-primary-600 dark:text-primary-400">Products</router-link>
-        <router-link to="/about" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" active-class="text-primary-600 dark:text-primary-400">About</router-link>
-        <router-link to="/services" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" active-class="text-primary-600 dark:text-primary-400">Services</router-link>
-        <router-link to="/contact" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" active-class="text-primary-600 dark:text-primary-400">Contact</router-link>
+        <router-link to="/products" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-300" active-class="text-primary-600 dark:text-secondary-400">Products</router-link>
+        <router-link to="/about" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-300" active-class="text-primary-600 dark:text-secondary-400">About</router-link>
+        <router-link to="/services" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-300" active-class="text-primary-600 dark:text-secondary-400">Services</router-link>
+        <router-link to="/contact" class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-secondary-500 dark:hover:text-secondary-400 transition-colors duration-300" active-class="text-primary-600 dark:text-secondary-400">Contact</router-link>
       </div>
 
       <!-- Search Bar -->
@@ -105,6 +117,56 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
             {{ cartStore.totalItems > 99 ? '99+' : cartStore.totalItems }}
           </span>
         </router-link>
+        
+        <template v-if="isLoggedIn">
+          <div class="relative flex items-center gap-2">
+            <!-- User Profile / Dropdown Toggle -->
+            <button 
+              @click="isProfileDropdownOpen = !isProfileDropdownOpen"
+              class="flex items-center gap-2 focus:outline-none"
+            >
+              <img :src="authStore.user?.image" alt="User" class="w-9 h-9 rounded-full border-2 border-primary-500 hover:border-secondary-400 transition-colors shadow-sm" />
+              <span class="hidden sm:block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                {{ authStore.user?.firstName }}
+              </span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div 
+              v-if="isProfileDropdownOpen"
+              class="absolute right-0 top-full mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden animate-fade-in z-50"
+            >
+              <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                <p class="text-sm text-gray-900 dark:text-white font-semibold">{{ authStore.user?.firstName }} {{ authStore.user?.lastName }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">@{{ authStore.user?.username }}</p>
+              </div>
+              <ul class="py-1">
+                <li>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Profile</a>
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Settings</a>
+                </li>
+                <li class="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
+                  <button 
+                    @click="handleLogout"
+                    class="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium"
+                  >
+                    <ArrowRightOnRectangleIcon class="w-4 h-4" /> Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <router-link 
+            to="/login"
+            class="p-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full bg-primary-500 hover:bg-secondary-400 text-white hover:text-primary-900 text-sm font-bold transition-all flex items-center gap-1 shadow-sm hover:shadow-md"
+          >
+            <UserIcon class="w-5 h-5" /> <span class="hidden sm:inline">Log In</span>
+          </router-link>
+        </template>
       </div>
     </div>
   </nav>

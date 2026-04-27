@@ -33,3 +33,12 @@ export const getProductsByCategory = async (category: string): Promise<ProductsR
   const response = await api.get<ProductsResponse>(`/products/category/${category}`);
   return response.data;
 };
+
+export const login = async (username: string, password: string): Promise<any> => {
+  const response = await api.post('/auth/login', {
+    username,
+    password,
+    expiresInMins: 60, // optional
+  });
+  return response.data;
+};

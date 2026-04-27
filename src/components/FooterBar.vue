@@ -10,11 +10,11 @@ import { ShoppingCartIcon } from '@heroicons/vue/24/outline'
         <!-- Brand Info -->
         <div class="col-span-1 lg:col-span-1">
           <router-link to="/" class="flex items-center gap-2 group mb-6">
-            <div class="bg-primary-600 text-white p-2 rounded-xl">
+            <div class="bg-primary-500 text-white p-2 rounded-xl group-hover:bg-secondary-400 group-hover:text-primary-900 transition-all duration-300">
               <ShoppingCartIcon class="w-6 h-6" />
             </div>
-            <span class="font-extrabold text-2xl bg-gradient-to-r from-primary-600 to-blue-500 bg-clip-text text-transparent">
-              ShopVue
+            <span class="font-extrabold text-2xl bg-gradient-to-r from-primary-500 to-secondary-400 bg-clip-text text-transparent transition-all duration-300">
+              IZ Nexus
             </span>
           </router-link>
           <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
@@ -64,7 +64,7 @@ import { ShoppingCartIcon } from '@heroicons/vue/24/outline'
       <!-- Copyright -->
       <div class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-gray-500 dark:text-gray-400 text-sm">
-          &copy; {{ new Date().getFullYear() }} ShopVue Inc. All rights reserved.
+          &copy; {{ new Date().getFullYear() }} IZ Nexus Inc. All rights reserved.
         </p>
         <div class="flex gap-4">
           <!-- Social Icons (Placeholder SVG) -->
