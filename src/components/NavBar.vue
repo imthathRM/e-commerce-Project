@@ -144,9 +144,6 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
                 <li>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Profile</a>
                 </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Settings</a>
-                </li>
                 <li class="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
                   <button 
                     @click="handleLogout"
@@ -160,12 +157,20 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
           </div>
         </template>
         <template v-else>
-          <router-link 
-            to="/login"
-            class="p-2 sm:px-4 sm:py-2 rounded-xl sm:rounded-full bg-primary-500 hover:bg-secondary-400 text-white hover:text-primary-900 text-sm font-bold transition-all flex items-center gap-1 shadow-sm hover:shadow-md"
-          >
-            <UserIcon class="w-5 h-5" /> <span class="hidden sm:inline">Log In</span>
-          </router-link>
+          <div class="flex items-center gap-2">
+            <router-link 
+              to="/login"
+              class="hidden sm:inline-block px-4 py-2 text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
+              Log In
+            </router-link>
+            <router-link 
+              to="/signup"
+              class="px-4 py-2 rounded-full bg-primary-500 hover:bg-secondary-400 text-white hover:text-primary-900 text-sm font-bold transition-all shadow-sm hover:shadow-md flex items-center gap-1"
+            >
+              <UserIcon class="w-5 h-5" /> <span>Sign Up</span>
+            </router-link>
+          </div>
         </template>
       </div>
     </div>

@@ -78,6 +78,7 @@ const handleLogin = async () => {
     </form>
     
     <div class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+      <p class="mb-4">Don't have an account? <router-link to="/signup" class="text-primary-600 dark:text-primary-400 font-bold hover:underline">Sign Up</router-link></p>
       <p>Test credentials: <br/> Username: <strong class="text-gray-800 dark:text-gray-200">emilys</strong> <br/> Password: <strong class="text-gray-800 dark:text-gray-200">emilyspass</strong></p>
     </div>
   </div>
