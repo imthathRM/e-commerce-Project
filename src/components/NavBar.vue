@@ -10,7 +10,7 @@ const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 
-const isLoggedIn = computed(() => authStore.isAuthenticated)
+const isLoggedIn = computed(() => authStore.isAuthenticated.value);
 
 const isDark = ref(false)
 const searchQuery = ref('')
@@ -127,7 +127,7 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
             >
               <img :src="authStore.user?.image" alt="User" class="w-9 h-9 rounded-full border-2 border-primary-500 hover:border-secondary-400 transition-colors shadow-sm" />
               <span class="hidden sm:block text-sm font-semibold text-gray-700 dark:text-gray-200">
-                {{ authStore.user?.firstName }}
+                Hi, {{ authStore.user?.firstName }}
               </span>
             </button>
 
@@ -168,7 +168,7 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
               to="/signup"
               class="px-4 py-2 rounded-full bg-primary-500 hover:bg-secondary-400 text-white hover:text-primary-900 text-sm font-bold transition-all shadow-sm hover:shadow-md flex items-center gap-1"
             >
-              <UserIcon class="w-5 h-5" /> <span>Sign Up</span>
+              <UserIcon class="w-5 h-5" /> <span>Sign In</span>
             </router-link>
           </div>
         </template>
