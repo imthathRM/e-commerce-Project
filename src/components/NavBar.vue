@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { ShoppingCartIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import { UserIcon, ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
 
 const router = useRouter()
+const route = useRoute()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 
@@ -15,8 +16,9 @@ const authStore = useAuthStore()
 const { isAuthenticated: isLoggedIn, user } = storeToRefs(authStore)
 
 const isDark = ref(false)
-const searchQuery = ref('')
+const searchQuery = ref(route.query.q as string || '')
 const isProfileDropdownOpen = ref(false)
+let searchTimeout: any = null
 
 const handleLogout = () => {
   authStore.logout()
@@ -39,15 +41,23 @@ const toggleTheme = () => {
   }
 }
 
-const handleSearch = () => {
+const performSearch = () => {
   if (searchQuery.value.trim()) {
-    router.push({ name: 'products', query: { q: searchQuery.value } })
+    router.push({ name: 'products', query: { ...route.query, q: searchQuery.value } })
   } else {
-    router.push({ name: 'products' })
+    const { q, ...rest } = route.query
+    router.push({ name: 'products', query: rest })
   }
 }
 
-watch(() => router.currentRoute.value.query.q, (newQ) => {
+const handleSearchInput = () => {
+  if (searchTimeout) clearTimeout(searchTimeout)
+  searchTimeout = setTimeout(() => {
+    performSearch()
+  }, 300)
+}
+
+watch(() => route.query.q, (newQ) => {
   if (newQ !== undefined) {
     searchQuery.value = newQ as string
   } else {
@@ -78,10 +88,11 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
       </div>
 
       <!-- Search Bar -->
-      <form @submit.prevent="handleSearch" class="flex-grow max-w-md relative hidden md:block">
+      <form @submit.prevent="performSearch" class="flex-grow max-w-md relative hidden md:block">
         <div class="relative flex items-center w-full">
           <input 
             v-model="searchQuery"
+            @input="handleSearchInput"
             type="text" 
             placeholder="Search products..." 
             class="w-full bg-gray-100/80 dark:bg-gray-800/80 border border-transparent rounded-full py-2.5 pl-12 pr-4 text-sm focus:bg-white dark:focus:bg-gray-900 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all dark:text-white shadow-inner"
