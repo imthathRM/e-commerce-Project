@@ -32,11 +32,19 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isAuthenticated = computed(() => !!token.value);
 
+  const updateUser = (updatedUser: Partial<User>) => {
+    if (user.value) {
+      user.value = { ...user.value, ...updatedUser };
+      localStorage.setItem('user', JSON.stringify(user.value));
+    }
+  };
+
   return {
     user,
     token,
     setAuth,
     logout,
+    updateUser,
     isAuthenticated,
   };
 });

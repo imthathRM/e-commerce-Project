@@ -159,7 +159,7 @@ watch(() => route.query.q, (newQ) => {
               </div>
               <ul class="py-1">
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Profile</a>
+                  <router-link to="/dashboard" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Profile</router-link>
                 </li>
                 <li class="border-t border-gray-100 dark:border-gray-700 mt-1 pt-1">
                   <button 

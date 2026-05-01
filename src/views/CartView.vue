@@ -3,6 +3,8 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
 import { useToastStore } from '@/stores/toast'
+import { useOrderStore } from '@/stores/orders'
+import { useAuthStore } from '@/stores/auth'
 import {
   TrashIcon,
   MinusIcon,
@@ -18,12 +20,15 @@ import { CheckBadgeIcon } from '@heroicons/vue/24/solid'
 
 const cartStore = useCartStore()
 const toastStore = useToastStore()
+const orderStore = useOrderStore()
+const authStore = useAuthStore()
 const router = useRouter()
 
 const promoCode = ref('')
 const promoApplied = ref(false)
 const promoError = ref('')
 const PROMO_DISCOUNT = 0.10 // 10%
+const isCheckingOut = ref(false)
 
 const applyPromo = () => {
   if (promoCode.value.trim().toUpperCase() === 'IZNEXUS10') {
@@ -63,6 +68,25 @@ const handleRemove = (id: number, title: string) => {
 const handleClearCart = () => {
   cartStore.clearCart()
   toastStore.addToast('Cart cleared', 'info', 'All items have been removed')
+}
+
+const handleCheckout = async () => {
+  if (!authStore.isAuthenticated) {
+    toastStore.addToast('Please login to checkout', 'warning', 'Authentication required')
+    router.push('/login')
+    return
+  }
+
+  isCheckingOut.value = true
+  
+  // Simulate processing delay
+  setTimeout(() => {
+    orderStore.addOrder(cartStore.items, finalTotal.value)
+    cartStore.clearCart()
+    toastStore.addToast('Order placed successfully!', 'success', 'Thank you for your purchase')
+    router.push('/dashboard')
+    isCheckingOut.value = false
+  }, 1500)
 }
 </script>
 
@@ -298,11 +322,23 @@ const handleClearCart = () => {
               </div>
             </div>
 
-            <!-- CTA -->
             <div class="px-6 pb-6">
-              <button class="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-extrabold py-4 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary-600/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary-600/30 text-base">
-                Proceed to Checkout
-                <ArrowRightIcon class="w-5 h-5" />
+              <button 
+                @click="handleCheckout"
+                :disabled="isCheckingOut"
+                class="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 text-white font-extrabold py-4 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary-600/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary-600/30 text-base disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <template v-if="isCheckingOut">
+                  <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </template>
+                <template v-else>
+                  Proceed to Checkout
+                  <ArrowRightIcon class="w-5 h-5" />
+                </template>
               </button>
               <p class="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1">
                 <ShieldCheckIcon class="w-3.5 h-3.5" />
