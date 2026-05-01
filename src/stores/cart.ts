@@ -30,6 +30,21 @@ export const useCartStore = defineStore('cart', () => {
     return items.value.reduce((total, item) => total + (item.price * item.quantity), 0);
   });
 
+  const totalSavings = computed(() => {
+    return items.value.reduce((total, item) => {
+      const originalPrice = item.price / (1 - item.discountPercentage / 100);
+      return total + ((originalPrice - item.price) * item.quantity);
+    }, 0);
+  });
+
+  const isInCart = (productId: number): boolean => {
+    return items.value.some(item => item.id === productId);
+  };
+
+  const getQuantity = (productId: number): number => {
+    return items.value.find(item => item.id === productId)?.quantity ?? 0;
+  };
+
   // Actions
   const addToCart = (product: Product) => {
     const existingItem = items.value.find(item => item.id === product.id);
@@ -66,6 +81,9 @@ export const useCartStore = defineStore('cart', () => {
     items,
     totalItems,
     totalPrice,
+    totalSavings,
+    isInCart,
+    getQuantity,
     addToCart,
     removeFromCart,
     updateQuantity,

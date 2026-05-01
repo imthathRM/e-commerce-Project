@@ -3,13 +3,15 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getProductById } from '@/services/api'
 import { useCartStore } from '@/stores/cart'
+import { useToastStore } from '@/stores/toast'
 import type { Product } from '@/types'
-import { ArrowLeftIcon, ShoppingCartIcon, CheckIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ShoppingCartIcon, CheckIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline'
 import { StarIcon as StarIconSolid } from '@heroicons/vue/20/solid'
 
 const route = useRoute()
 const router = useRouter()
 const cartStore = useCartStore()
+const toastStore = useToastStore()
 
 const product = ref<Product | null>(null)
 const isLoading = ref(true)
@@ -48,6 +50,7 @@ const handleAddToCart = () => {
   if (product.value) {
     cartStore.addToCart(product.value)
     addedToCart.value = true
+    toastStore.addToast('Added to cart!', 'success', product.value.title)
     setTimeout(() => {
       addedToCart.value = false
     }, 2000)

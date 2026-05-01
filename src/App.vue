@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import FooterBar from '@/components/FooterBar.vue'
+import ToastNotification from '@/components/ToastNotification.vue'
 
 onMounted(() => {
   // Check for saved theme
@@ -25,6 +26,7 @@ onMounted(() => {
       </router-view>
     </main>
     <FooterBar />
+    <ToastNotification />
   </div>
 </template>
 

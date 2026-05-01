@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { ShoppingCartIcon, SunIcon, MoonIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { useCartStore } from '@/stores/cart'
@@ -10,7 +11,8 @@ const router = useRouter()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 
-const isLoggedIn = computed(() => authStore.isAuthenticated.value);
+// ✅ storeToRefs keeps computed refs (like isAuthenticated) fully reactive
+const { isAuthenticated: isLoggedIn, user } = storeToRefs(authStore)
 
 const isDark = ref(false)
 const searchQuery = ref('')
@@ -105,17 +107,21 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
           <MoonIcon v-else class="w-6 h-6" />
         </button>
 
-        <router-link 
-          to="/cart" 
+        <router-link
+          to="/cart"
           class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors relative text-gray-600 dark:text-gray-300 group"
+          aria-label="Shopping cart"
         >
           <ShoppingCartIcon class="w-6 h-6 group-hover:scale-110 transition-transform" />
-          <span 
-            v-if="cartStore.totalItems > 0"
-            class="absolute top-0 right-0 -mt-1 -mr-1 bg-gradient-to-r from-red-500 to-rose-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md animate-fade-in"
-          >
-            {{ cartStore.totalItems > 99 ? '99+' : cartStore.totalItems }}
-          </span>
+          <Transition name="badge-bounce">
+            <span
+              v-if="cartStore.totalItems > 0"
+              class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-rose-600 text-white text-[10px] font-extrabold min-w-[20px] h-5 flex items-center justify-center rounded-full shadow-lg px-1 select-none"
+            >
+              {{ cartStore.totalItems > 99 ? '99+' : cartStore.totalItems }}
+              <span class="absolute inset-0 rounded-full bg-red-400 opacity-75 animate-ping" />
+            </span>
+          </Transition>
         </router-link>
         
         <template v-if="isLoggedIn">
@@ -125,9 +131,9 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
               @click="isProfileDropdownOpen = !isProfileDropdownOpen"
               class="flex items-center gap-2 focus:outline-none"
             >
-              <img :src="authStore.user?.image" alt="User" class="w-9 h-9 rounded-full border-2 border-primary-500 hover:border-secondary-400 transition-colors shadow-sm" />
+              <img :src="user?.image" alt="User" class="w-9 h-9 rounded-full border-2 border-primary-500 hover:border-secondary-400 transition-colors shadow-sm" />
               <span class="hidden sm:block text-sm font-semibold text-gray-700 dark:text-gray-200">
-                Hi, {{ authStore.user?.firstName }}
+                Hi, {{ user?.firstName }}
               </span>
             </button>
 
@@ -137,8 +143,8 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
               class="absolute right-0 top-full mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden animate-fade-in z-50"
             >
               <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-                <p class="text-sm text-gray-900 dark:text-white font-semibold">{{ authStore.user?.firstName }} {{ authStore.user?.lastName }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">@{{ authStore.user?.username }}</p>
+                <p class="text-sm text-gray-900 dark:text-white font-semibold">{{ user?.firstName }} {{ user?.lastName }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">@{{ user?.username }}</p>
               </div>
               <ul class="py-1">
                 <li>
@@ -176,3 +182,17 @@ watch(() => router.currentRoute.value.query.q, (newQ) => {
     </div>
   </nav>
 </template>
+
+<style scoped>
+.badge-bounce-enter-active {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.badge-bounce-leave-active {
+  transition: all 0.2s ease-in;
+}
+.badge-bounce-enter-from,
+.badge-bounce-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+</style>
